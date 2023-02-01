@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+
+#storage:
+#  location: C:\Users\Alexei.Dorofeev\Desktop\my
+#  maxFileSize: 52428800
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: pass
+  jpa:
+    hibernate:
+      ddl-auto: update
