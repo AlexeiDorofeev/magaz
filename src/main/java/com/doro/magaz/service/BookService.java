@@ -5,10 +5,13 @@ import com.doro.magaz.entity.Book;
 import com.doro.magaz.entity.Magazine;
 import com.doro.magaz.repository.AuthorRepository;
 import com.doro.magaz.repository.BookRepository;
+import com.doro.magaz.util.CsvReader;
 import lombok.Data;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,16 +46,21 @@ public class BookService {
         return authorRepository.findByEmail(email);
     }
 
-    public void readDataFromCSV() {
-        // Code to read data from CSV files
-      //  List<Author> authors = readAuthorsFromCSV();
-     //   List<Book> books = readBooksFromCSV();
-       // List<Magazine> magazines = readMagazinesFromCSV();
+    public void readBooksFromCSV(String filePath) {
+        CsvReader csvReader = new CsvReader(filePath, StandardCharsets.UTF_8);
+        try {
+            List<String[]> rows = csvReader.read();
+            rows.stream().map(row -> {
+                    Book book = new Book();
+                    book.setTitle(row[0]);
+                    book.setDescription(row[1]);
+                    book.setIsbn(row[2]);
+                    return book;
+                })
+                .forEach(bookRepository::save);
 
-        // Save the data to the database
-      //  authorRepository.saveAll(authors);
-      //  bookRepository.saveAll(books);
-     //   magazineRepository.saveAll(magazines);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 }

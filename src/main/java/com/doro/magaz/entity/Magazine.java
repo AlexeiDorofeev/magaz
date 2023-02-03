@@ -26,7 +26,7 @@ public class Magazine {
 
     private Date publicationDate;
 
-    private String ISBN;
+    private String isbn;
 
     @ManyToMany
     @JoinTable(
