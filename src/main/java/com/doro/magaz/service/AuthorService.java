@@ -29,7 +29,13 @@ public class AuthorService {
                     author.setLastName(row[2]);
                     return author;
                 })
-                .forEach(authorRepository::save);
+                .forEach(author -> {
+                    try {
+                        authorRepository.save(author);
+                    } catch (DataIntegrityViolationException e) {
+                        System.out.println("error");
+                    }
+                });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

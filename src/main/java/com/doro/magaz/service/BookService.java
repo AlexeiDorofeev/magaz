@@ -49,7 +49,7 @@ public class BookService {
                 }
             }
             return book;
-        });
+        }).collect(Collectors.toList());
     }
 
     public List<Book> findBooksByAuthorEmail(String authorEmail) {
