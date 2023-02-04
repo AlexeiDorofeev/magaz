@@ -1,5 +1,6 @@
 package com.doro.magaz.entity;
 
+import com.doro.magaz.entity.Author;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -7,24 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
-import java.util.List;
 
-@Data
 @Entity
-@Table(name = "magazine")
-public class Magazine {
-
+@Data
+@Table(name = "book_author")
+public class BookAuthor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 
-    private Date publicationDate;
-
-    private String isbn;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 }
