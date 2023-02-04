@@ -19,7 +19,7 @@ public class CsvReader {
 
     public List<String[]> read() throws IOException {
         try (Stream<String> rows = Files.lines(Paths.get(filePath), charset)) {
-            return rows.skip(1).map(line -> line.split("[,;]")).toList();
+            return rows.skip(1).map(line -> line.split(";")).toList();
         }
     }
 }

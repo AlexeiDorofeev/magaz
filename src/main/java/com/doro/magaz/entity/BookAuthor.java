@@ -26,4 +26,9 @@ public class BookAuthor {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @Override
+    public String toString() {
+        return getId().toString();
+    }
 }

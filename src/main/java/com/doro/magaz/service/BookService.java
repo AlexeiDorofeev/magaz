@@ -9,9 +9,11 @@ import com.doro.magaz.repository.BookRepository;
 import com.doro.magaz.util.CsvReader;
 import lombok.Data;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,5 +50,27 @@ public class BookService {
             }
             return book;
         }).collect(Collectors.toList());
+    }
+
+    public List<Book> findBooksByAuthorEmail(String authorEmail) {
+        Optional<Author> maybeAuthor = authorRepository.findByEmail(authorEmail.trim());
+        if (maybeAuthor.isPresent()) {
+            Author author = maybeAuthor.get();
+            List<BookAuthor> bookAuthors = bookAuthorRepository.findByAuthor(author);
+            return bookAuthors.stream().map(BookAuthor::getBook).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    @Transactional
+    public List<Book> getAllBooksWithDetails() {
+        List<Book> books = bookRepository.findAll();
+        books.forEach(book -> book.getBookAuthors().size());
+        return books;
     }
 }
