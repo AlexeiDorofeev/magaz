@@ -27,7 +27,7 @@ public class BookService {
     private final AuthorRepository authorRepository;
     private final BookAuthorRepository bookAuthorRepository;
 
-    public void importBooksFromCsv(String filePath) throws IOException {
+    public void readBooksFromCSV(String filePath) throws IOException {
         CsvReader csvReader = new CsvReader(filePath, Charset.defaultCharset());
         List<String[]> rows = csvReader.read();
         rows.stream().map(row -> {
@@ -49,7 +49,7 @@ public class BookService {
                 }
             }
             return book;
-        }).collect(Collectors.toList());
+        });
     }
 
     public List<Book> findBooksByAuthorEmail(String authorEmail) {

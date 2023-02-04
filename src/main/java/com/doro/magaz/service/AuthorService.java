@@ -4,6 +4,7 @@ import com.doro.magaz.entity.Author;
 import com.doro.magaz.repository.AuthorRepository;
 import com.doro.magaz.util.CsvReader;
 import lombok.Data;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,6 @@ public class AuthorService {
                     return author;
                 })
                 .forEach(authorRepository::save);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
