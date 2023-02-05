@@ -3,6 +3,7 @@ package com.doro.magaz.entity;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +31,6 @@ public class Magazine {
 
     private String isbn;
 
-    @OneToMany(mappedBy = "magazine")
+    @OneToMany(mappedBy = "magazine", fetch = FetchType.EAGER)
     private List<MagazineAuthor> magazineAuthors;
 }

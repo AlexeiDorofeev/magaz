@@ -24,8 +24,11 @@ public class MagazApplication {
         authorService.readAuthorsFromCSV("src/main/resources/data/autoren.csv");
         bookService.readBooksFromCSV("src/main/resources/data/buecher.csv");
         magazineService.readMagazinesFromCSV("src/main/resources/data/zeitschriften.csv");
+
         List<Book> allBooks = bookService.getAllBooksWithDetails();
         List<Magazine> magazines = magazineService.getAllMagazinesWithDetails();
-        //    List<Book> byAuthorEmail = bookService.findBooksByAuthorEmail("pr-lieblich@optivo.de");
+
+        Book bookByIsbn = bookService.findBookByIsbn("4545-8558-3232");
+        System.out.println(bookByIsbn);
     }
 }

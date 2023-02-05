@@ -35,8 +35,11 @@ public class BookService {
             book.setTitle(row[0]);
             book.setIsbn(row[1]);
             book.setDescription(row[3]);
-            book = bookRepository.save(book);
-
+            try {
+                book = bookRepository.save(book);
+            } catch (Exception e) {
+                System.out.println("error");
+            }
             String[] authorEmails = row[2].split(",");
             for (String authorEmail : authorEmails) {
                 Optional<Author> maybeAuthor = authorRepository.findByEmail(authorEmail.trim());
@@ -45,7 +48,11 @@ public class BookService {
                     BookAuthor bookAuthor = new BookAuthor();
                     bookAuthor.setBook(book);
                     bookAuthor.setAuthor(author);
-                    bookAuthorRepository.save(bookAuthor);
+                    try {
+                        bookAuthorRepository.save(bookAuthor);
+                    } catch (Exception e) {
+                        System.out.println("error");
+                    }
                 }
             }
             return book;
@@ -72,5 +79,9 @@ public class BookService {
         List<Book> books = bookRepository.findAll();
         books.forEach(book -> book.getBookAuthors().size());
         return books;
+    }
+
+    public Book findBookByIsbn(String isbn) {
+        return bookRepository.findByIsbn(isbn);
     }
 }
